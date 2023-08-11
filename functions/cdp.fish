@@ -1,13 +1,13 @@
 function cdp --description "cd with project name under repo"
     if [ (count $argv) -eq 0 ]
-        echo "cdp: missing argument"
-        echo "Usage: cdp REPO_PROJECT_NAME"
+        echo "cdp: missing argument" > /dev/stderr
+        echo "Usage: cdp REPO_PROJECT_NAME" > /dev/stderr
         return 1
     end
 
     # repo command is not installed
     if not type -q repo
-        echo "fatal: no repo command installed"
+        echo "fatal: no repo command installed" > /dev/stderr
         return 1
     end
 
