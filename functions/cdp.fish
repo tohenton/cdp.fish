@@ -1,7 +1,7 @@
-function pcd --description "cd with project name under repo"
+function cdp --description "cd with project name under repo"
     if [ (count $argv) -eq 0 ]
-        echo "pcd: missing argument"
-        echo "Usage: pcd REPO_PROJECT_NAME"
+        echo "cdp: missing argument"
+        echo "Usage: cdp REPO_PROJECT_NAME"
         return 1
     end
 
