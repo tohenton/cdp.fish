@@ -19,7 +19,7 @@ function rpath --description "Show a project path under repo"
     end
 
     set -l safe_arg (string escape -- $argv[1])
-    echo (repo manifest | grep $safe_arg | string match -r 'path="[^"]*' | string replace 'path="' '')
+    echo (repo manifest | grep name=\"$safe_arg\" | string match -r 'path="[^"]*' | string replace 'path="' '')
     return 0
 end
 
