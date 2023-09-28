@@ -1,8 +1,11 @@
 function cdp --description "cd with project name under repo"
-    if [ (count $argv) -eq 0 ]
-        __echo_error "cdp: missing argument"
-        __echo_error "Usage: cdp REPO_PROJECT_NAME"
-        return 1
+    if test (count $argv) -eq 0
+        if not __is_repo_initialized
+            __echo_error "fatal: not a repo tree"
+            return 1
+        end
+        cd (__find_repo_root)
+        return 0
     end
 
     # repo command is not installed
@@ -27,6 +30,18 @@ function __is_repo_initialized
     else
         return 0
     end
+end
+
+function __find_repo_root
+    set -l current_dir (pwd)
+    while test $current_dir != "/"
+        if test -d $current_dir/.repo
+            echo $current_dir
+            return 0
+        end
+        set current_dir (dirname $current_dir)
+    end
+    return 1
 end
 
 function __echo_error
