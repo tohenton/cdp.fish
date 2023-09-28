@@ -12,13 +12,21 @@ function cdp --description "cd with project name under repo"
     end
 
     # executed not in repo repository
-    if repo help | grep -q "repo is not yet installed"
+    if not __is_repo_initialized
         __echo_error "fatal: not a repo repository: .repo"
         return 1
     end
 
     builtin cd (repo manifest | grep $argv[1] | grep -o 'path="[^"]*' | sed 's/path="//')
     return 0
+end
+
+function __is_repo_initialized
+    if repo help | grep -q "repo is not yet installed"
+        return 1
+    else
+        return 0
+    end
 end
 
 function __echo_error
